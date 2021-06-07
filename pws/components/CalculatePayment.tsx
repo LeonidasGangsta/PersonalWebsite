@@ -13,6 +13,7 @@ const CalculatePayment: React.FC = () => {
 
   const { register, handleSubmit, watch, formState: { isValid } } = useForm({
     mode: 'onSubmit',
+    reValidateMode: 'onChange',
     shouldFocusError: true,
   });
 
