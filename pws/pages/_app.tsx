@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 
 const MyApp: React.FC<{ Component: React.FC, pageProps: any }> = ({ Component, pageProps }) => {
   return (
-    <Layout pageName="main">
+    <Layout>
       <Component {...pageProps} />
   
       <style jsx global>{`
