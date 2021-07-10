@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { formatCurrency, getPaymentAmount } from '../utils/servicesUtils';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import CurrencyInput, { formatValue } from 'react-currency-input-field';
 
 type FormValues = {
   whoAsks?: 'Oscar' | 'Aleja',
@@ -11,7 +12,7 @@ const CalculatePayment: React.FC = () => {
   const [result, setResult] = useState<{ Oscar: number, Aleja: number }>({ Oscar: 0, Aleja: 0});
   const [showResults, setShowResults] = useState<boolean>(false);
 
-  const { register, handleSubmit, watch, formState: { isValid } } = useForm({
+  const { register, handleSubmit, watch, formState: { isValid }, setValue } = useForm({
     mode: 'onChange',
     shouldFocusError: true,
   });
@@ -19,7 +20,7 @@ const CalculatePayment: React.FC = () => {
   const whoIsAsking = watch('whoAsks');
   const price = watch('price');
 
-  const onSubmit: SubmitHandler<FormValues> = ({ price, whoAsks }) => {
+  const onSubmit: SubmitHandler<FormValues> = ({ price }) => {
     const amountToPay = getPaymentAmount(price);
     setResult(amountToPay);
     setShowResults(true)
@@ -59,9 +60,13 @@ const CalculatePayment: React.FC = () => {
             Precio de lo que compraremos
           </label>
           <hr />
-          <input
-            type="number"
+          <CurrencyInput
             className="border-4 my-2 border-red-600 rounded-md px-3 py-2 focus:ring-4 focus:ring-red-400 focus:outline-none text-gray-800"
+            placeholder="Ingresa el valor de lo que vayan a comprar"
+            decimalsLimit={2}
+            allowNegativeValue={false}
+            prefix="$"
+            onValueChange={(value) => setValue('price', value)}
             {...register('price', { required: true })}
           />
         </div>
@@ -80,7 +85,7 @@ const CalculatePayment: React.FC = () => {
           <hr />
           <div id="results">
             <span>
-              {`En ese caso, para ${formatCurrency(Number(price))}, Oscar pagara ${formatCurrency(result.Oscar)} y la toposa pagara ${formatCurrency(result.Aleja)}`}
+              {`En ese caso, para ${formatCurrency(price)}, Oscar pagara ${formatCurrency(result.Oscar)} y la toposa pagara ${formatCurrency(result.Aleja)}`}
             </span>
           </div>
         </>
