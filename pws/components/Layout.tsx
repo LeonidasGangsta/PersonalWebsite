@@ -15,6 +15,7 @@ const Layout: React.FC = ({ children }) => {
         <title>
           {`${APP_TITTLE} ${page ? `- ${page?.Name}` : ''}`}
         </title>
+        <meta name="description" content="This is a personal website for personal purposes" />
       </Head>
       <header className="w-full bg-white shadow-md text-gray-600 flex justify-center flex-col md:flex-row md:justify-between items-center p-4 font-semibold">
         <Link href="/">
