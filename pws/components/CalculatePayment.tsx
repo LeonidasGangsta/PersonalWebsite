@@ -3,12 +3,12 @@ import { formatCurrency, getPaymentAmount } from '../utils/servicesUtils';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type FormValues = {
-  whoAsks: 'Oscar' | 'Aleja',
+  whoAsks?: 'Oscar' | 'Aleja',
   price: number,
 }
 
 const CalculatePayment: React.FC = () => {
-  const [result, setResult] = useState<number>(0);
+  const [result, setResult] = useState<{ Oscar: number, Aleja: number }>({ Oscar: 0, Aleja: 0});
   const [showResults, setShowResults] = useState<boolean>(false);
 
   const { register, handleSubmit, watch, formState: { isValid } } = useForm({
@@ -20,7 +20,7 @@ const CalculatePayment: React.FC = () => {
   const price = watch('price');
 
   const onSubmit: SubmitHandler<FormValues> = ({ price, whoAsks }) => {
-    const amountToPay = getPaymentAmount(price)[whoAsks];
+    const amountToPay = getPaymentAmount(price);
     setResult(amountToPay);
     setShowResults(true)
   };
@@ -32,7 +32,7 @@ const CalculatePayment: React.FC = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center md:flex-row">
-        <div
+        {/* <div
           id="payment__who-asks"
           className="flex flex-col md:mx-4 px-4"
         >
@@ -43,26 +43,26 @@ const CalculatePayment: React.FC = () => {
           <select
             id="payment__who-asks__select"
             className="border-4 my-2 border-red-600 rounded-full px-3 py-2 focus:ring-4 focus:ring-red-400 focus:outline-none text-gray-800"
-            { ...register('whoAsks', { required: true }) }
+            {...register('whoAsks', { required: true })}
           >
             <option value="Aleja">
               Aleja
-                </option>
+            </option>
             <option value="Oscar">
               Oscar
-                </option>
+            </option>
           </select>
-        </div>
+        </div> */}
         <hr />
         <div id="payment__price" className="flex flex-col md:mx-4 px-4">
           <label className="font-semibold text-center">
-            Precio
+            Precio de lo que compraremos
           </label>
           <hr />
           <input
             type="number"
             className="border-4 my-2 border-red-600 rounded-md px-3 py-2 focus:ring-4 focus:ring-red-400 focus:outline-none text-gray-800"
-            { ...register('price', { required: true }) }
+            {...register('price', { required: true })}
           />
         </div>
         <button
@@ -80,7 +80,7 @@ const CalculatePayment: React.FC = () => {
           <hr />
           <div id="results">
             <span>
-              {`En ese caso, para ${formatCurrency(Number(price))}, ${whoIsAsking} puede ayudar con ${formatCurrency(result)}`}
+              {`En ese caso, para ${formatCurrency(Number(price))}, Oscar pagara ${formatCurrency(result.Oscar)} y la toposa pagara ${formatCurrency(result.Aleja)}`}
             </span>
           </div>
         </>
