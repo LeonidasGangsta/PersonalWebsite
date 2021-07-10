@@ -10,7 +10,7 @@ const Layout: React.FC = ({ children }) => {
   const page = NavigationItems.find((navigationPage) => navigationPage.Route === router.pathname)
 
   return (
-    <>
+    <html lang="es">
       <Head>
         <title>
           {`${APP_TITTLE} ${page ? `- ${page?.Name}` : ''}`}
@@ -37,7 +37,7 @@ const Layout: React.FC = ({ children }) => {
       <main className="container mx-auto my-4">
         {children}
       </main>
-    </>
+    </html>
   )
 };
 
