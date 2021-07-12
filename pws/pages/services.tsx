@@ -11,13 +11,15 @@ const Services: React.FC = () => {
 
   return (
     <div className="shadow p-4 flex flex-col align-middle">
-      <div className="flex relative pr-10">
+      <div
+        className="flex relative pr-10 cursor-pointer"
+        onClick={toggleShowPaymentService}
+      >
         <h1 className="font-semibold uppercase text-center">
           Calculá lo que necesites pagar
           </h1>
         <button
           className="focus:outline-none absolute right-4 rounded-full bg-red-700 hover:bg-red-600"
-          onClick={toggleShowPaymentService}
         >
           {showPaymentService ? (
             <ChevronUpIcon className="h-7 w-7 text-white" />
